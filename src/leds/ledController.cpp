@@ -1,18 +1,17 @@
-#pragma once
-
 #include <Arduino.h>
 #include <leds/ledController.h>
 
 ledController::ledController() {
     len = 0;
-    timeout = 0;
+    timeoutStart = 0;
     state = 0;
     lastPos = 0;
 }
 
 void ledController::turnOn(int pos) {
 
-    time(&timeout);
+    timeoutStart = millis(); 
+    state = 1; 
     lastPos = pos;
 
     if (pos) {
@@ -36,9 +35,10 @@ void ledController::turnOn(int pos) {
 
 void ledController::turnOff() {
 
-    timeout = 0;
+    timeoutStart = 0; 
+    state = 0;
 
-    if (lastPos) {
+    if (!lastPos) {
         for (int i = len; i >= 0; i--) {
             for (int j = 255; j >= 0; j-=25){
                 leds[i].setBrightness(j);
@@ -64,8 +64,10 @@ void ledController::loop() {
 }
 
 void ledController::update() {
-    if (state) {
-        if(difftime(time(NULL), timeout) > 45) {
+
+    if (state == 1 && timeoutStart != 0) { 
+        
+        if(millis() - timeoutStart > 45000) { 
             turnOff();
         }
     }
@@ -73,11 +75,12 @@ void ledController::update() {
 
 void ledController::insertLed(int pin) {
 
-    if(len < 7) {
+    if(len < NUM_LEDS) {
 
         Leds newLed = Leds(pin);
     
         leds[len] = newLed;
+        leds[len].begin();
         len+=1;
     }
 }

@@ -1,9 +1,10 @@
-#ifndef __ledController_h__
-#define __ledController_h__
+#ifndef LEDCONTROLLER_H
+#define LEDCONTROLLER_H
+
+#define NUM_LEDS 7
 
 #include <leds/leds.h>
 #include <Arduino.h>
-#include <time.h>
 
 /*
 
@@ -15,12 +16,12 @@
 
 class ledController {
 public:
-    Leds leds[7];
+    Leds leds[NUM_LEDS];
     int len;
     int lastPos;
 
     int state;
-    time_t timeout;
+    unsigned long timeoutStart;
     
     ledController();
 

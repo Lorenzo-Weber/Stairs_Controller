@@ -1,5 +1,5 @@
-#ifndef __sensor_H__
-#define __sensor_h__
+#ifndef SENSOR_H
+#define SENSOR_H
 
 #pragma once
 
@@ -10,6 +10,7 @@ public:
     int trigger, echo, pos;
     unsigned long timeout;
     Sensor(int trigger, int echo, int pos);
+    Sensor();
 
     void begin();
 

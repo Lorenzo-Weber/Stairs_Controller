@@ -7,6 +7,8 @@ Sensor::Sensor(int t, int e, int p) {
     timeout = 30000;
 }
 
+Sensor::Sensor(){};
+
 void Sensor::begin() {
     pinMode(trigger, OUTPUT);
     pinMode(echo, INPUT);

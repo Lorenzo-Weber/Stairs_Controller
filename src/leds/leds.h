@@ -1,5 +1,5 @@
-#ifndef __LEDS_H__
-#define __LEDS_H__
+#ifndef LEDS_H
+#define LEDS_H
 
 class Leds {
 public:
